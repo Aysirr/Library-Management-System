@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="hero">
+    <nav class="nav container">
+      <a href="#home" class="brand">Library Management</a>
+      <div class="nav-links">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#books" class="nav-link">Books</a>
+        <a href="#members" class="nav-link">Members</a>
+        <a href="#borrowings" class="nav-link">Borrowings</a>
+        <a href="#categories" class="nav-link">Categories</a>
+      </div>
+    </nav>
+
+    <section id="home" class="container hero-body">
+      <p class="eyebrow">Dashboard</p>
+      <div id="api-status" class="api-status" hidden></div>
+    </section>
+  </header>
+
+  <main class="container main">
+
+    <section id="books" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Books</h2>
+          <p>Every title in the catalogue, with copies available.</p>
+        </div>
+        <div class="actions">
+          <label class="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span class="sr-only">Search books</span>
+            <input type="search" id="book-search" placeholder="Search title or author">
+          </label>
+          <button type="button" class="btn btn-primary" data-open="book-dialog">+ Add book</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Title</th><th>Author</th><th>ISBN</th><th>Category</th><th>Copies</th><th><span class="sr-only">Actions</span></th></tr>
+          </thead>
+          <tbody id="books-body"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="members" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Members</h2>
+          <p>Registered borrowers and how many books each has out.</p>
+        </div>
+        <button type="button" class="btn btn-primary" data-open="member-dialog">+ Add member</button>
+      </div>
+      <div id="members-grid" class="card-grid"><p class="empty">Loading…</p></div>
+    </section>
+
+    <section id="borrowings" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Borrowings</h2>
+          <p>Who has which book, when it's due back, and what's been returned.</p>
+        </div>
+        <button type="button" class="btn btn-primary" data-open="borrow-dialog">+ New borrowing</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Member</th><th>Book</th><th>Borrowed</th><th>Due</th><th>Returned</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+          </thead>
+          <tbody id="borrowings-body"><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="categories" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Categories</h2>
+          <p>Shelves the catalogue is sorted into.</p>
+        </div>
+      </div>
+      <div class="categories-layout">
+        <div id="categories-grid" class="cat-grid"><p class="empty">Loading…</p></div>
+        <form id="category-form" class="cat-form">
+          <label for="category-name">New category</label>
+          <input id="category-name" name="name" type="text" placeholder="e.g. History" required>
+          <button type="submit" class="btn btn-primary">Add category</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="book-dialog" class="dialog">
+    <form method="dialog" id="book-form" class="dialog-form">
+      <h3>Add a book</h3>
+      <label>Title<input name="title" required></label>
+      <label>Author<input name="author" required></label>
+      <label>ISBN<input name="isbn" required></label>
+      <div class="row">
+        <label>Category
+          <select name="category_id" id="book-category"><option value="">Uncategorised</option></select>
+        </label>
+        <label>Copies<input name="copies" type="number" min="0" value="1" required></label>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Save book</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="member-dialog" class="dialog">
+    <form method="dialog" id="member-form" class="dialog-form">
+      <h3>Add a member</h3>
+      <label>Full name<input name="full_name" required></label>
+      <label>Email<input name="email" type="email" required></label>
+      <label>Phone <span class="optional">(optional)</span><input name="phone" type="tel"></label>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Save member</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="borrow-dialog" class="dialog">
+    <form method="dialog" id="borrow-form" class="dialog-form">
+      <h3>Record a borrowing</h3>
+      <label>Member<select name="member_id" id="borrow-member" required></select></label>
+      <label>Book<select name="book_id" id="borrow-book" required></select></label>
+      <div class="row">
+        <label>Borrow date<input name="borrow_date" type="date" required></label>
+        <label>Due date<input name="due_date" type="date" required></label>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Save borrowing</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

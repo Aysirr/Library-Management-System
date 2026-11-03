@@ -1,0 +1,20 @@
+Method	    Endpoint	                    Purpose
+
+GET	        /	                            API welcome message and endpoint list
+
+GET	        /books	                        List books
+POST	    /books	                        Add a book
+DELETE	    /books/{book_id}	            Delete a book
+
+GET	        /members	                    List members
+POST	    /members	                    Add a member
+DELETE	    /members/{member_id}	        Delete a member
+
+GET	        /categories	                    List categories
+POST	    /categories	                    Add a category
+DELETE	    /categories/{category_id}	    Delete a category
+
+GET	        /borrowings	                    List borrowing records
+POST	    /borrowings	                    Record a borrowing
+PUT	        /borrowings/{borrow_id}/return	Mark a book as returned
+DELETE	    /borrowings/{borrow_id}	        Delete a borrowing record
