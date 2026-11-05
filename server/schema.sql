@@ -1,5 +1,3 @@
--- Library Management System: database schema (SQLite)
-
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE categories (
