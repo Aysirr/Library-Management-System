@@ -135,10 +135,11 @@ function showApiError(err) {
   $("#retry-btn").addEventListener("click", loadAll);
   ["#books-body", "#borrowings-body"].forEach((sel) => {
     const cols = sel === "#books-body" ? 6 : 7;
-    $(sel).innerHTML = `<tr><td colspan="${cols}" class="empty">No data — the API isn't responding.</td></tr>`;
+    if ($(sel)) $(sel).innerHTML = `<tr><td colspan="${cols}" class="empty">No data — the API isn't responding.</td></tr>`;
   });
-  $("#members-grid").innerHTML = `<p class="empty">No data — the API isn't responding.</p>`;
-  $("#categories-grid").innerHTML = `<p class="empty">No data — the API isn't responding.</p>`;
+  ["#members-grid", "#categories-grid"].forEach((sel) => {
+    if ($(sel)) $(sel).innerHTML = `<p class="empty">No data — the API isn't responding.</p>`;
+  });
 }
 
 function hideApiError() { $("#api-status").hidden = true; }
@@ -152,11 +153,12 @@ function renderAll() {
 }
 
 function renderBooks() {
+  const body = $("#books-body");
+  if (!body) return;
   const q = $("#book-search").value.trim().toLowerCase();
   const rows = state.books.filter((b) =>
     !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || String(b.isbn).toLowerCase().includes(q)
   );
-  const body = $("#books-body");
   if (!rows.length) {
     body.innerHTML = `<tr><td colspan="6" class="empty">${q ? "No books match your search." : "No books yet. Add your first one."}</td></tr>`;
     return;
@@ -176,6 +178,7 @@ function renderBooks() {
 
 function renderMembers() {
   const grid = $("#members-grid");
+  if (!grid) return;
   if (!state.members.length) {
     grid.innerHTML = `<p class="empty">No members yet. Add your first one.</p>`;
     return;
@@ -201,6 +204,7 @@ function renderMembers() {
 
 function renderBorrowings() {
   const body = $("#borrowings-body");
+  if (!body) return;
   if (!state.borrowings.length) {
     body.innerHTML = `<tr><td colspan="7" class="empty">No borrowings recorded yet.</td></tr>`;
     return;
@@ -231,6 +235,7 @@ function renderBorrowings() {
 
 function renderCategories() {
   const grid = $("#categories-grid");
+  if (!grid) return;
   if (!state.categories.length) {
     grid.innerHTML = `<p class="empty">No categories yet.</p>`;
     return;
@@ -250,9 +255,10 @@ function renderCategories() {
 }
 
 function fillSelects() {
-  $("#book-category").innerHTML = `<option value="">Uncategorised</option>` +
+  if ($("#book-category")) $("#book-category").innerHTML = `<option value="">Uncategorised</option>` +
     state.categories.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
 
+  if (!$("#borrow-member")) return;
   $("#borrow-member").innerHTML = state.members.length
     ? `<option value="" disabled selected>Choose a member</option>` +
       state.members.map((m) => `<option value="${esc(m.id)}">${esc(m.name)}</option>`).join("")
@@ -321,7 +327,7 @@ async function submitJSON(form, path, buildBody, successMsg) {
   }
 }
 
-$("#book-form").addEventListener("submit", (e) => {
+$("#book-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
   submitJSON(e.target, "/books", (f) => ({
     title: f.get("title").trim(),
@@ -332,7 +338,7 @@ $("#book-form").addEventListener("submit", (e) => {
   }), "Book added.");
 });
 
-$("#member-form").addEventListener("submit", (e) => {
+$("#member-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
   submitJSON(e.target, "/members", (f) => ({
     full_name: f.get("full_name").trim(),
@@ -341,7 +347,7 @@ $("#member-form").addEventListener("submit", (e) => {
   }), "Member added.");
 });
 
-$("#borrow-form").addEventListener("submit", (e) => {
+$("#borrow-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
   const f = new FormData(e.target);
   if (f.get("due_date") < f.get("borrow_date")) {
@@ -356,20 +362,14 @@ $("#borrow-form").addEventListener("submit", (e) => {
   }), "Borrowing recorded.");
 });
 
-$("#category-form").addEventListener("submit", (e) => {
+$("#category-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
   submitJSON(e.target, "/categories", (f) => ({ name: f.get("name").trim() }), "Category added.");
 });
 
-$("#book-search").addEventListener("input", renderBooks);
+$("#book-search")?.addEventListener("input", renderBooks);
 
-const navLinks = document.querySelectorAll(".nav-link");
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting) return;
-    navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${entry.target.id}`));
-  });
-}, { rootMargin: "-40% 0px -55% 0px" });
-document.querySelectorAll("#home, .section").forEach((s) => observer.observe(s));
+const currentPage = location.pathname.split("/").pop() || "index.html";
+document.querySelectorAll(".nav-link").forEach((a) => a.classList.toggle("active", a.getAttribute("href") === currentPage));
 
 loadAll();

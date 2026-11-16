@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Members — Library Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+  <header class="hero">
+    <nav class="nav container">
+      <a href="index.html" class="brand">Library Management</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="books.html" class="nav-link">Books</a>
+        <a href="members.html" class="nav-link">Members</a>
+        <a href="borrowings.html" class="nav-link">Borrowings</a>
+        <a href="categories.html" class="nav-link">Categories</a>
+      </div>
+    </nav>
+
+    <section id="home" class="container hero-body">
+      <p class="eyebrow">Dashboard</p>
+      <div id="api-status" class="api-status" hidden></div>
+    </section>
+  </header>
+
+  <main class="container main">
+
+    <section id="members" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Members</h2>
+          <p>Registered borrowers and how many books each has out.</p>
+        </div>
+        <button type="button" class="btn btn-primary" data-open="member-dialog">+ Add member</button>
+      </div>
+      <div id="members-grid" class="card-grid"><p class="empty">Loading…</p></div>
+    </section>
+
+  </main>
+
+  <dialog id="member-dialog" class="dialog">
+    <form method="dialog" id="member-form" class="dialog-form">
+      <h3>Add a member</h3>
+      <label>Full name<input name="full_name" required></label>
+      <label>Email<input name="email" type="email" required></label>
+      <label>Phone <span class="optional">(optional)</span><input name="phone" type="tel"></label>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Save member</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

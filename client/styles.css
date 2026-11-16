@@ -277,3 +277,97 @@ td {
 .main {
   padding-bottom: 50px;
 }
+a.btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .container {
+    width: auto;
+    padding: 0 16px;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .brand {
+    font-size: 24px;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .nav-link {
+    padding: 6px 10px;
+  }
+
+  .section {
+    margin-top: 30px;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .section-head h2 {
+    font-size: 24px;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .search input {
+    width: 100%;
+    margin-right: 0;
+    box-sizing: border-box;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  .card-grid,
+  .cat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .categories-layout {
+    flex-direction: column;
+  }
+
+  .cat-grid,
+  .cat-form {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dialog {
+    width: 90%;
+  }
+
+  .toasts {
+    left: 16px;
+    right: 16px;
+  }
+}

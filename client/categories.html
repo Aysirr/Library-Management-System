@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Categories — Library Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+  <header class="hero">
+    <nav class="nav container">
+      <a href="index.html" class="brand">Library Management</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="books.html" class="nav-link">Books</a>
+        <a href="members.html" class="nav-link">Members</a>
+        <a href="borrowings.html" class="nav-link">Borrowings</a>
+        <a href="categories.html" class="nav-link">Categories</a>
+      </div>
+    </nav>
+
+    <section id="home" class="container hero-body">
+      <p class="eyebrow">Dashboard</p>
+      <div id="api-status" class="api-status" hidden></div>
+    </section>
+  </header>
+
+  <main class="container main">
+
+    <section id="categories" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Categories</h2>
+          <p>Shelves the catalogue is sorted into.</p>
+        </div>
+      </div>
+      <div class="categories-layout">
+        <div id="categories-grid" class="cat-grid"><p class="empty">Loading…</p></div>
+        <form id="category-form" class="cat-form">
+          <label for="category-name">New category</label>
+          <input id="category-name" name="name" type="text" placeholder="e.g. History" required>
+          <button type="submit" class="btn btn-primary">Add category</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

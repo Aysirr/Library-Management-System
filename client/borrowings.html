@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Borrowings — Library Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+  <header class="hero">
+    <nav class="nav container">
+      <a href="index.html" class="brand">Library Management</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="books.html" class="nav-link">Books</a>
+        <a href="members.html" class="nav-link">Members</a>
+        <a href="borrowings.html" class="nav-link">Borrowings</a>
+        <a href="categories.html" class="nav-link">Categories</a>
+      </div>
+    </nav>
+
+    <section id="home" class="container hero-body">
+      <p class="eyebrow">Dashboard</p>
+      <div id="api-status" class="api-status" hidden></div>
+    </section>
+  </header>
+
+  <main class="container main">
+
+    <section id="borrowings" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Borrowings</h2>
+          <p>Who has which book, when it's due back, and what's been returned.</p>
+        </div>
+        <button type="button" class="btn btn-primary" data-open="borrow-dialog">+ New borrowing</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Member</th><th>Book</th><th>Borrowed</th><th>Due</th><th>Returned</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+          </thead>
+          <tbody id="borrowings-body"><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <dialog id="borrow-dialog" class="dialog">
+    <form method="dialog" id="borrow-form" class="dialog-form">
+      <h3>Record a borrowing</h3>
+      <label>Member<select name="member_id" id="borrow-member" required></select></label>
+      <label>Book<select name="book_id" id="borrow-book" required></select></label>
+      <div class="row">
+        <label>Borrow date<input name="borrow_date" type="date" required></label>
+        <label>Due date<input name="due_date" type="date" required></label>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Save borrowing</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
